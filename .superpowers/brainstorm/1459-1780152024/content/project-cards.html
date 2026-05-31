@@ -1,0 +1,85 @@
+<h2>项目卡片样式</h2>
+<p class="subtitle">展示猜数字、贪吃蛇、打砖块三个游戏项目</p>
+
+<div class="cards">
+  <div class="card" data-choice="grid-cards" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); height: 180px; padding: 20px; border-radius: 8px;">
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; height: 100%;">
+        <div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div style="font-size: 24px; margin-bottom: 5px;">🎮</div>
+          <div style="color: #fff; font-size: 11px; text-align: center;">猜数字</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div style="font-size: 24px; margin-bottom: 5px;">🐍</div>
+          <div style="color: #fff; font-size: 11px; text-align: center;">贪吃蛇</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div style="font-size: 24px; margin-bottom: 5px;">🧱</div>
+          <div style="color: #fff; font-size: 11px; text-align: center;">打砖块</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>网格卡片</h3>
+      <p>三列网格布局，整齐对称。每张卡片显示游戏图标、名称和简短描述。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="horizontal-scroll" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); height: 180px; padding: 20px; border-radius: 8px; overflow: hidden;">
+      <div style="display: flex; gap: 15px; height: 100%; width: 150%;">
+        <div style="min-width: 140px; background: rgba(255,255,255,0.1); border-radius: 12px; padding: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div style="font-size: 32px; margin-bottom: 8px;">🎮</div>
+          <div style="color: #fff; font-size: 14px; font-weight: 600; margin-bottom: 4px;">猜数字</div>
+          <div style="color: rgba(255,255,255,0.7); font-size: 10px; text-align: center;">猜猜电脑想的数字</div>
+        </div>
+        <div style="min-width: 140px; background: rgba(255,255,255,0.1); border-radius: 12px; padding: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div style="font-size: 32px; margin-bottom: 8px;">🐍</div>
+          <div style="color: #fff; font-size: 14px; font-weight: 600; margin-bottom: 4px;">贪吃蛇</div>
+          <div style="color: rgba(255,255,255,0.7); font-size: 10px; text-align: center;">经典街机游戏</div>
+        </div>
+        <div style="min-width: 140px; background: rgba(255,255,255,0.1); border-radius: 12px; padding: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div style="font-size: 32px; margin-bottom: 8px;">🧱</div>
+          <div style="color: #fff; font-size: 14px; font-weight: 600; margin-bottom: 4px;">打砖块</div>
+          <div style="color: rgba(255,255,255,0.7); font-size: 10px; text-align: center;">反弹球消除方块</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>横向滚动</h3>
+      <p>卡片横向排列，支持左右滚动浏览。每张卡片更大更突出，适合展示细节。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="featured-1" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); height: 180px; padding: 20px; border-radius: 8px;">
+      <div style="display: flex; flex-direction: column; gap: 10px; height: 100%;">
+        <div style="flex: 1; background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%); border-radius: 10px; padding: 12px; display: flex; align-items: center; gap: 10px;">
+          <div style="font-size: 28px;">🎮</div>
+          <div>
+            <div style="color: #fff; font-size: 14px; font-weight: 600;">猜数字</div>
+            <div style="color: rgba(255,255,255,0.8); font-size: 10px;">已完成 ✅</div>
+          </div>
+        </div>
+        <div style="flex: 1; display: flex; gap: 10px;">
+          <div style="flex: 1; background: rgba(255,255,255,0.1); border-radius: 10px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+            <div style="text-align: center;">
+              <div style="font-size: 20px;">🐍</div>
+              <div style="color: rgba(255,255,255,0.7); font-size: 9px;">贪吃蛇</div>
+            </div>
+          </div>
+          <div style="flex: 1; background: rgba(255,255,255,0.1); border-radius: 10px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+            <div style="text-align: center;">
+              <div style="font-size: 20px;">🧱</div>
+              <div style="color: rgba(255,255,255,0.7); font-size: 9px;">打砖块</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>主次分明</h3>
+      <p>突出已完成的项目，其他项目用小卡片预览。引导用户关注重点作品。</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<h2>Hero 区域布局选择</h2>
+<p class="subtitle">这是用户看到的第一屏，决定了网站的第一印象</p>
+
+<div class="cards">
+  <div class="card" data-choice="centered" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 180px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+      <div style="text-align: center; color: #fff; padding: 20px;">
+        <div style="font-size: 28px; font-weight: 700; margin-bottom: 8px;">你好，我是符奕宸</div>
+        <div style="font-size: 16px; opacity: 0.9; margin-bottom: 15px;">大一学生 / 未来的全栈开发者</div>
+        <button style="padding: 12px 24px; border-radius: 25px; border: 2px solid #fff; background: transparent; color: #fff; cursor: pointer;">查看我的项目</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>居中布局</h3>
+      <p>所有内容居中显示，简洁大气，视觉焦点集中。适合强调个人品牌。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="split" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 180px; display: flex; border-radius: 8px; overflow: hidden;">
+      <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 20px; color: #fff;">
+        <div style="font-size: 22px; font-weight: 700; margin-bottom: 8px;">你好，我是符奕宸</div>
+        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 12px;">大一学生 / 未来的全栈开发者</div>
+        <button style="padding: 10px 20px; border-radius: 25px; border: 2px solid #fff; background: transparent; color: #fff; cursor: pointer; width: fit-content;">查看我的项目</button>
+      </div>
+      <div style="flex: 1; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1);">
+        <div style="width: 100px; height: 100px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 40px;">👨‍💻</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>左右分栏</h3>
+      <p>左侧文字，右侧头像/插图。平衡感好，可以展示个人形象。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="fullscreen" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); height: 180px; display: flex; align-items: center; justify-content: center; border-radius: 8px; position: relative;">
+      <div style="text-align: center; color: #fff; padding: 20px; z-index: 2;">
+        <div style="font-size: 32px; font-weight: 800; margin-bottom: 8px; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">你好，我是符奕宸</div>
+        <div style="font-size: 18px; opacity: 0.95; margin-bottom: 20px;">大一学生 / 未来的全栈开发者</div>
+        <button style="padding: 14px 32px; border-radius: 30px; border: none; background: #fff; color: #667eea; font-weight: 600; cursor: pointer;">查看我的项目</button>
+      </div>
+      <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);"></div>
+    </div>
+    <div class="card-body">
+      <h3>全屏沉浸</h3>
+      <p>占据整个视口高度，视觉冲击力最强。配合动态渐变效果更佳。</p>
+    </div>
+  </div>
+</div>

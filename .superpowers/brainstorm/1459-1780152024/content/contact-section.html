@@ -1,0 +1,84 @@
+<h2>联系区域样式</h2>
+<p class="subtitle">用户如何与你取得联系</p>
+
+<div class="cards">
+  <div class="card" data-choice="form-style" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); height: 180px; padding: 20px; border-radius: 8px;">
+      <div style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px; height: 100%;">
+        <div style="color: #fff; font-size: 16px; font-weight: 600; margin-bottom: 12px;">给我留言</div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="background: rgba(255,255,255,0.15); border-radius: 6px; padding: 8px 10px; color: rgba(255,255,255,0.6); font-size: 11px;">姓名</div>
+          <div style="background: rgba(255,255,255,0.15); border-radius: 6px; padding: 8px 10px; color: rgba(255,255,255,0.6); font-size: 11px;">邮箱</div>
+          <div style="background: rgba(255,255,255,0.15); border-radius: 6px; padding: 8px 10px; color: rgba(255,255,255,0.6); font-size: 11px; min-height: 40px;">留言内容...</div>
+          <button style="padding: 8px; border-radius: 6px; border: none; background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; font-size: 11px; cursor: pointer;">发送留言</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>联系表单</h3>
+      <p>提供姓名、邮箱、留言字段。正式专业，适合展示给潜在雇主或合作伙伴。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="social-links" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); height: 180px; padding: 20px; border-radius: 8px;">
+      <div style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px; height: 100%;">
+        <div style="color: #fff; font-size: 16px; font-weight: 600; margin-bottom: 15px;">找到我</div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;">
+            <div style="width: 24px; height: 24px; background: #333; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px;">G</div>
+            <div>
+              <div style="color: #fff; font-size: 12px; font-weight: 500;">GitHub</div>
+              <div style="color: rgba(255,255,255,0.5); font-size: 10px;">查看我的代码</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;">
+            <div style="width: 24px; height: 24px; background: #fc5531; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px;">C</div>
+            <div>
+              <div style="color: #fff; font-size: 12px; font-weight: 500;">CSDN</div>
+              <div style="color: rgba(255,255,255,0.5); font-size: 10px;">阅读我的博客</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;">
+            <div style="width: 24px; height: 24px; background: #0088cc; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px;">E</div>
+            <div>
+              <div style="color: #fff; font-size: 12px; font-weight: 500;">Email</div>
+              <div style="color: rgba(255,255,255,0.5); font-size: 10px;">2689613923@qq.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>社交链接</h3>
+      <p>展示 GitHub、CSDN、邮箱等社交平台链接。简洁直接，便于快速联系。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="hybrid" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); height: 180px; padding: 20px; border-radius: 8px;">
+      <div style="display: flex; gap: 10px; height: 100%;">
+        <div style="flex: 1; background: rgba(255,255,255,0.1); border-radius: 10px; padding: 12px;">
+          <div style="color: #fff; font-size: 12px; font-weight: 600; margin-bottom: 8px;">快速联系</div>
+          <div style="display: flex; gap: 8px;">
+            <div style="width: 28px; height: 28px; background: #333; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 10px;">G</div>
+            <div style="width: 28px; height: 28px; background: #fc5531; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 10px;">C</div>
+            <div style="width: 28px; height: 28px; background: #0088cc; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 10px;">E</div>
+          </div>
+        </div>
+        <div style="flex: 1; background: rgba(255,255,255,0.1); border-radius: 10px; padding: 12px;">
+          <div style="color: #fff; font-size: 12px; font-weight: 600; margin-bottom: 8px;">留言</div>
+          <div style="display: flex; flex-direction: column; gap: 5px;">
+            <div style="background: rgba(255,255,255,0.15); border-radius: 4px; padding: 5px 7px; color: rgba(255,255,255,0.5); font-size: 9px;">邮箱</div>
+            <div style="background: rgba(255,255,255,0.15); border-radius: 4px; padding: 5px 7px; color: rgba(255,255,255,0.5); font-size: 9px; min-height: 20px;">留言...</div>
+            <button style="padding: 5px; border-radius: 4px; border: none; background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; font-size: 9px; cursor: pointer;">发送</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>混合布局</h3>
+      <p>左侧社交链接图标，右侧简单留言表单。兼顾快速联系和详细沟通需求。</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx skills *)",
+      "Bash(bcdedit *)",
+      "Bash(cmd.exe /c \"bcdedit /enum all\")",
+      "Bash(powershell.exe *)",
+      "Bash(start *)",
+      "Read(//c/Users/defaultuser0/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/skills/brainstorming/**)",
+      "Bash(scripts/start-server.sh --project-dir D:/Claude)",
+      "Bash(python3 -c ' *)",
+      "Bash(node -e ' *)",
+      "Bash(/c/Users/defaultuser0/AppData/Local/Programs/Python/Python312/python *)",
+      "Bash(/plugin install *)",
+      "Bash(powershell *)",
+      "Bash(cp *)",
+      "Skill(davila7-claude-code-templates-game-development)",
+      "Bash(npx playwright *)",
+      "Bash(node test-games.js)",
+      "Bash(npm install *)",
+      "Bash(node -c snake.html)",
+      "Bash(sed -n '258,500p' snake.html)",
+      "Bash(node -c snake-script.js)",
+      "Bash(sed '1d;$d')",
+      "Bash(node -c breakout-script.js)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}

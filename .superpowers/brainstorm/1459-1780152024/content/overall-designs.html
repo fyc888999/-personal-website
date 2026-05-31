@@ -1,0 +1,177 @@
+<h2>整体设计方案</h2>
+<p class="subtitle">将你选择的所有元素组合成完整的网站方案</p>
+
+<div class="cards">
+  <div class="card" data-choice="design-a" onclick="toggleSelect(this)">
+    <div class="card-image" style="height: 300px; border-radius: 8px; overflow: hidden; position: relative;">
+      <!-- 模拟完整页面 -->
+      <div style="height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); position: relative;">
+        <!-- 导航栏 -->
+        <div style="position: absolute; top: 0; left: 0; right: 0; background: rgba(0,0,0,0.3); padding: 8px 15px; display: flex; justify-content: space-between; align-items: center; z-index: 10;">
+          <div style="color: #fff; font-size: 12px; font-weight: 700;">符奕宸</div>
+          <div style="display: flex; gap: 12px; color: #fff; font-size: 9px;">
+            <span>首页</span><span>关于</span><span>项目</span><span>联系</span>
+          </div>
+        </div>
+
+        <!-- Hero 区域 -->
+        <div style="padding: 40px 15px 20px; display: flex; align-items: center; height: 50%;">
+          <div style="flex: 1;">
+            <div style="color: #fff; font-size: 18px; font-weight: 700; margin-bottom: 5px;">你好，我是符奕宸</div>
+            <div style="color: rgba(255,255,255,0.8); font-size: 10px; margin-bottom: 10px;">大一学生 / 未来的全栈开发者</div>
+            <button style="padding: 6px 14px; border-radius: 15px; border: 2px solid #fff; background: transparent; color: #fff; font-size: 9px;">查看项目</button>
+          </div>
+          <div style="flex: 1; display: flex; justify-content: center;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 30px;">👨‍💻</div>
+          </div>
+        </div>
+
+        <!-- 项目区域 -->
+        <div style="padding: 0 15px 15px;">
+          <div style="color: #fff; font-size: 12px; font-weight: 600; margin-bottom: 8px;">我的项目</div>
+          <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px;">
+            <div style="min-width: 80px; background: rgba(255,255,255,0.15); border-radius: 8px; padding: 8px; text-align: center;">
+              <div style="font-size: 20px;">🎮</div>
+              <div style="color: #fff; font-size: 9px; margin-top: 3px;">猜数字</div>
+            </div>
+            <div style="min-width: 80px; background: rgba(255,255,255,0.15); border-radius: 8px; padding: 8px; text-align: center;">
+              <div style="font-size: 20px;">🐍</div>
+              <div style="color: #fff; font-size: 9px; margin-top: 3px;">贪吃蛇</div>
+            </div>
+            <div style="min-width: 80px; background: rgba(255,255,255,0.15); border-radius: 8px; padding: 8px; text-align: center;">
+              <div style="font-size: 20px;">🧱</div>
+              <div style="color: #fff; font-size: 9px; margin-top: 3px;">打砖块</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>方案 A：经典三色渐变</h3>
+      <p><strong>配色：</strong>蓝紫粉三色渐变<br><strong>特点：</strong>色彩丰富，视觉层次分明，适合展示创意项目<br><strong>风格：</strong>活力四射，吸引眼球</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>优点</h4><ul><li>视觉冲击力强</li><li>色彩搭配时尚</li><li>适合年轻开发者</li></ul></div>
+        <div class="cons"><h4>考虑</h4><ul><li>渐变较复杂</li><li>文字可读性需注意</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="design-b" onclick="toggleSelect(this)">
+    <div class="card-image" style="height: 300px; border-radius: 8px; overflow: hidden; position: relative;">
+      <!-- 模拟完整页面 -->
+      <div style="height: 100%; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); position: relative;">
+        <!-- 导航栏 -->
+        <div style="position: absolute; top: 0; left: 0; right: 0; background: rgba(0,0,0,0.5); padding: 8px 15px; display: flex; justify-content: space-between; align-items: center; z-index: 10;">
+          <div style="color: #667eea; font-size: 12px; font-weight: 700;">符奕宸</div>
+          <div style="display: flex; gap: 12px; color: #fff; font-size: 9px;">
+            <span>首页</span><span>关于</span><span>项目</span><span>联系</span>
+          </div>
+        </div>
+
+        <!-- Hero 区域 -->
+        <div style="padding: 40px 15px 20px; display: flex; align-items: center; height: 50%;">
+          <div style="flex: 1;">
+            <div style="color: #fff; font-size: 18px; font-weight: 700; margin-bottom: 5px;">你好，我是符奕宸</div>
+            <div style="color: rgba(255,255,255,0.7); font-size: 10px; margin-bottom: 10px;">大一学生 / 未来的全栈开发者</div>
+            <button style="padding: 6px 14px; border-radius: 15px; border: none; background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; font-size: 9px;">查看项目</button>
+          </div>
+          <div style="flex: 1; display: flex; justify-content: center;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 4px 15px rgba(102,126,234,0.4);">👨‍💻</div>
+          </div>
+        </div>
+
+        <!-- 项目区域 -->
+        <div style="padding: 0 15px 15px;">
+          <div style="color: #667eea; font-size: 12px; font-weight: 600; margin-bottom: 8px;">我的项目</div>
+          <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px;">
+            <div style="min-width: 80px; background: rgba(102,126,234,0.2); border-radius: 8px; padding: 8px; text-align: center; border: 1px solid rgba(102,126,234,0.3);">
+              <div style="font-size: 20px;">🎮</div>
+              <div style="color: #fff; font-size: 9px; margin-top: 3px;">猜数字</div>
+            </div>
+            <div style="min-width: 80px; background: rgba(102,126,234,0.2); border-radius: 8px; padding: 8px; text-align: center; border: 1px solid rgba(102,126,234,0.3);">
+              <div style="font-size: 20px;">🐍</div>
+              <div style="color: #fff; font-size: 9px; margin-top: 3px;">贪吃蛇</div>
+            </div>
+            <div style="min-width: 80px; background: rgba(102,126,234,0.2); border-radius: 8px; padding: 8px; text-align: center; border: 1px solid rgba(102,126,234,0.3);">
+              <div style="font-size: 20px;">🧱</div>
+              <div style="color: #fff; font-size: 9px; margin-top: 3px;">打砖块</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>方案 B：深蓝紫渐变</h3>
+      <p><strong>配色：</strong>深蓝到紫色渐变，带发光效果<br><strong>特点：</strong>科技感强，专业稳重，适合技术展示<br><strong>风格：</strong>现代科技，深邃神秘</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>优点</h4><ul><li>科技感十足</li><li>护眼舒适</li><li>专业度高</li></ul></div>
+        <div class="cons"><h4>考虑</h4><ul><li>色彩相对单一</li><li>需要强调色点缀</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="design-c" onclick="toggleSelect(this)">
+    <div class="card-image" style="height: 300px; border-radius: 8px; overflow: hidden; position: relative;">
+      <!-- 模拟完整页面 -->
+      <div style="height: 100%; background: linear-gradient(135deg, #43cea2 0%, #185a9d 50%, #667eea 100%); position: relative;">
+        <!-- 导航栏 -->
+        <div style="position: absolute; top: 0; left: 0; right: 0; background: rgba(0,0,0,0.3); padding: 8px 15px; display: flex; justify-content: space-between; align-items: center; z-index: 10;">
+          <div style="color: #fff; font-size: 12px; font-weight: 700;">符奕宸</div>
+          <div style="display: flex; gap: 12px; color: #fff; font-size: 9px;">
+            <span>首页</span><span>关于</span><span>项目</span><span>联系</span>
+          </div>
+        </div>
+
+        <!-- Hero 区域 -->
+        <div style="padding: 40px 15px 20px; display: flex; align-items: center; height: 50%;">
+          <div style="flex: 1;">
+            <div style="color: #fff; font-size: 18px; font-weight: 700; margin-bottom: 5px;">你好，我是符奕宸</div>
+            <div style="color: rgba(255,255,255,0.9); font-size: 10px; margin-bottom: 10px;">大一学生 / 未来的全栈开发者</div>
+            <button style="padding: 6px 14px; border-radius: 15px; border: none; background: #fff; color: #185a9d; font-size: 9px; font-weight: 600;">查看项目</button>
+          </div>
+          <div style="flex: 1; display: flex; justify-content: center;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 30px; backdrop-filter: blur(5px);">👨‍💻</div>
+          </div>
+        </div>
+
+        <!-- 项目区域 -->
+        <div style="padding: 0 15px 15px;">
+          <div style="color: #fff; font-size: 12px; font-weight: 600; margin-bottom: 8px;">我的项目</div>
+          <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px;">
+            <div style="min-width: 80px; background: rgba(255,255,255,0.2); border-radius: 8px; padding: 8px; text-align: center; backdrop-filter: blur(5px);">
+              <div style="font-size: 20px;">🎮</div>
+              <div style="color: #fff; font-size: 9px; margin-top: 3px;">猜数字</div>
+            </div>
+            <div style="min-width: 80px; background: rgba(255,255,255,0.2); border-radius: 8px; padding: 8px; text-align: center; backdrop-filter: blur(5px);">
+              <div style="font-size: 20px;">🐍</div>
+              <div style="color: #fff; font-size: 9px; margin-top: 3px;">贪吃蛇</div>
+            </div>
+            <div style="min-width: 80px; background: rgba(255,255,255,0.2); border-radius: 8px; padding: 8px; text-align: center; backdrop-filter: blur(5px);">
+              <div style="font-size: 20px;">🧱</div>
+              <div style="color: #fff; font-size: 9px; margin-top: 3px;">打砖块</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>方案 C：青蓝渐变</h3>
+      <p><strong>配色：</strong>青色到蓝色渐变，清新自然<br><strong>特点：</strong>清新活力，视觉舒适，适合个人品牌<br><strong>风格：</strong>清新自然，亲和力强</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>优点</h4><ul><li>清新不俗套</li><li>视觉舒适</li><li>亲和力强</li></ul></div>
+        <div class="cons"><h4>考虑</h4><ul><li>可能不够"酷"</li><li>需要平衡专业感</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+  <h3 style="margin-bottom: 10px;">你的设计偏好总结</h3>
+  <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+    <span style="padding: 6px 12px; background: rgba(102,126,234,0.3); border-radius: 15px; font-size: 13px; color: #fff;">渐变活力风</span>
+    <span style="padding: 6px 12px; background: rgba(102,126,234,0.3); border-radius: 15px; font-size: 13px; color: #fff;">左右分栏</span>
+    <span style="padding: 6px 12px; background: rgba(102,126,234,0.3); border-radius: 15px; font-size: 13px; color: #fff;">横向滚动卡片</span>
+    <span style="padding: 6px 12px; background: rgba(102,126,234,0.3); border-radius: 15px; font-size: 13px; color: #fff;">联系表单</span>
+    <span style="padding: 6px 12px; background: rgba(102,126,234,0.3); border-radius: 15px; font-size: 13px; color: #fff;">智能隐藏导航</span>
+  </div>
+</div>

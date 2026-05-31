@@ -1,0 +1,70 @@
+<h2>导航栏样式</h2>
+<p class="subtitle">影响整体浏览体验的关键元素</p>
+
+<div class="cards">
+  <div class="card" data-choice="fixed-transparent" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 120px; position: relative; border-radius: 8px;">
+      <div style="position: absolute; top: 0; left: 0; right: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px 8px 0 0;">
+        <div style="color: #fff; font-size: 16px; font-weight: 700;">符奕宸</div>
+        <div style="display: flex; gap: 20px;">
+          <span style="color: #fff; font-size: 12px;">首页</span>
+          <span style="color: #fff; font-size: 12px;">关于我</span>
+          <span style="color: #fff; font-size: 12px;">项目</span>
+          <span style="color: #fff; font-size: 12px;">联系</span>
+        </div>
+      </div>
+      <div style="position: absolute; bottom: 20px; left: 20px; color: #fff;">
+        <div style="font-size: 20px; font-weight: 700;">左右分栏 Hero</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>固定透明导航</h3>
+      <p>导航栏固定在顶部，半透明背景。滚动时始终可见，不影响内容展示。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="fixed-solid" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 120px; position: relative; border-radius: 8px;">
+      <div style="position: absolute; top: 0; left: 0; right: 0; background: rgba(26,26,46,0.95); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px 8px 0 0;">
+        <div style="color: #fff; font-size: 16px; font-weight: 700;">符奕宸</div>
+        <div style="display: flex; gap: 20px;">
+          <span style="color: #fff; font-size: 12px;">首页</span>
+          <span style="color: #fff; font-size: 12px;">关于我</span>
+          <span style="color: #fff; font-size: 12px;">项目</span>
+          <span style="color: #fff; font-size: 12px;">联系</span>
+        </div>
+      </div>
+      <div style="position: absolute; bottom: 20px; left: 20px; color: #fff;">
+        <div style="font-size: 20px; font-weight: 700;">左右分栏 Hero</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>固定实色导航</h3>
+      <p>导航栏固定在顶部，深色实色背景。清晰稳定，适合长页面滚动。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="scroll-hide" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 120px; position: relative; border-radius: 8px;">
+      <div style="position: absolute; top: 0; left: 0; right: 0; background: rgba(0,0,0,0.3); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px 8px 0 0;">
+        <div style="color: #fff; font-size: 16px; font-weight: 700;">符奕宸</div>
+        <div style="display: flex; gap: 20px;">
+          <span style="color: #fff; font-size: 12px;">首页</span>
+          <span style="color: #fff; font-size: 12px;">关于我</span>
+          <span style="color: #fff; font-size: 12px;">项目</span>
+          <span style="color: #fff; font-size: 12px;">联系</span>
+        </div>
+      </div>
+      <div style="position: absolute; bottom: 20px; left: 20px; color: #fff;">
+        <div style="font-size: 20px; font-weight: 700;">左右分栏 Hero</div>
+      </div>
+      <div style="position: absolute; top: 50px; right: 20px; color: rgba(255,255,255,0.5); font-size: 10px; transform: rotate(-5deg);">
+        ↑ 向下滚动时隐藏
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>智能隐藏导航</h3>
+      <p>向下滚动时隐藏，向上滚动时显示。最大化内容展示空间，交互感强。</p>
+    </div>
+  </div>
+</div>
