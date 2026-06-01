@@ -630,6 +630,23 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        .form-embed-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .form-embed {
+            display: block;
+            width: 100%;
+            height: 520px;
+            border: none;
+            background: transparent;
+        }
+
         .contact-form {
             display: flex;
             flex-direction: column;
@@ -748,6 +765,10 @@
         @media (max-width: 768px) {
             .contact-card {
                 padding: var(--spacing-lg);
+            }
+
+            .form-embed {
+                height: 440px;
             }
 
             .form-submit {
@@ -965,23 +986,13 @@
             <h2 class="section-title">联系我</h2>
             <div class="contact-content">
                 <div class="contact-card fade-in">
-                    <form class="contact-form" id="contactForm">
-                        <div class="form-group">
-                            <label class="form-label" for="name">姓名</label>
-                            <input type="text" id="name" name="name" class="form-input" placeholder="请输入你的姓名" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="email">邮箱</label>
-                            <input type="email" id="email" name="email" class="form-input" placeholder="请输入你的邮箱" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="message">留言</label>
-                            <textarea id="message" name="message" class="form-textarea" placeholder="请输入你的留言..." required></textarea>
-                        </div>
-                        <button type="submit" class="form-submit">发送留言</button>
-                    </form>
-                    <div class="form-success" id="formSuccess">
-                        ✅ 留言已发送！我会尽快回复你。
+                    <div class="form-embed-wrapper">
+                        <iframe
+                            src="https://pwqmskoc.jsjform.com/f/vUmmdF"
+                            class="form-embed"
+                            allow="clipboard-write"
+                            loading="lazy"
+                        ></iframe>
                     </div>
                     <div class="contact-info">
                         <p>或者直接给我发邮件：</p>
@@ -1144,34 +1155,6 @@
                 const x = e.pageX - projectsScroll.offsetLeft;
                 const walk = (x - startX) * 2;
                 projectsScroll.scrollLeft = scrollLeft - walk;
-            });
-        }
-
-        // 表单验证和提交
-        const contactForm = document.getElementById('contactForm');
-        const formSuccess = document.getElementById('formSuccess');
-
-        if (contactForm) {
-            contactForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-
-                // 简单验证
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const message = document.getElementById('message').value;
-
-                if (name && email && message) {
-                    // 显示成功提示
-                    formSuccess.classList.add('show');
-
-                    // 重置表单
-                    contactForm.reset();
-
-                    // 3秒后隐藏提示
-                    setTimeout(() => {
-                        formSuccess.classList.remove('show');
-                    }, 3000);
-                }
             });
         }
 
