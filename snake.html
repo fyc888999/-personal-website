@@ -156,34 +156,52 @@
         /* ========== 移动端虚拟按键 ========== */
         .mobile-controls {
             display: none;
-            margin-top: 20px;
+            margin-top: 16px;
+            touch-action: none;
         }
 
-        .control-row {
-            display: flex;
+        .dpad {
+            display: grid;
+            grid-template-columns: repeat(3, 68px);
+            grid-template-rows: repeat(3, 68px);
+            gap: 6px;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 10px;
         }
 
         .control-btn {
-            width: 60px;
-            height: 60px;
+            width: 68px;
+            height: 68px;
             border: none;
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.08);
             color: #fff;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background 0.1s, transform 0.1s;
             backdrop-filter: blur(10px);
             user-select: none;
             -webkit-user-select: none;
+            touch-action: manipulation;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .control-btn:active {
-            background: rgba(102, 126, 234, 0.5);
-            transform: scale(0.95);
+            background: rgba(102, 126, 234, 0.6);
+            transform: scale(0.9);
+        }
+
+        .dpad-blank {
+            pointer-events: none;
+        }
+
+        .swipe-hint {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 0.8rem;
+            margin-top: 10px;
         }
 
         /* ========== 遮罩层通用 ========== */
@@ -426,7 +444,8 @@
 
         @media (max-width: 400px) {
             canvas { width: 100% !important; height: auto !important; }
-            .control-btn { width: 50px; height: 50px; font-size: 1.2rem; }
+            .dpad { grid-template-columns: repeat(3, 58px); grid-template-rows: repeat(3, 58px); }
+            .control-btn { width: 58px; height: 58px; font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -484,14 +503,18 @@
 
         <!-- 移动端虚拟按键 -->
         <div class="mobile-controls">
-            <div class="control-row">
+            <div class="dpad">
+                <div class="dpad-blank"></div>
                 <button class="control-btn" data-dir="up">&#8593;</button>
-            </div>
-            <div class="control-row">
+                <div class="dpad-blank"></div>
                 <button class="control-btn" data-dir="left">&#8592;</button>
-                <button class="control-btn" data-dir="down">&#8595;</button>
+                <div class="dpad-blank"></div>
                 <button class="control-btn" data-dir="right">&#8594;</button>
+                <div class="dpad-blank"></div>
+                <button class="control-btn" data-dir="down">&#8595;</button>
+                <div class="dpad-blank"></div>
             </div>
+            <p class="swipe-hint">也可以在屏幕上滑动控制方向</p>
         </div>
 
         <a href="index.html" class="back-link">&#8592; 返回主页</a>
@@ -1396,10 +1419,11 @@
     });
 
     /* ================================================================
-       移动端虚拟按键
+       移动端虚拟按键 (touchstart 响应更快)
        ================================================================ */
     document.querySelectorAll('.control-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
             if (!isPlaying || isPaused) return;
             const dir = btn.dataset.dir;
             switch (dir) {
@@ -1408,8 +1432,50 @@
                 case 'left':  if (direction.x === 0) { nextDirection = { x: -1, y: 0 }; playSound('turn'); } break;
                 case 'right': if (direction.x === 0) { nextDirection = { x: 1, y: 0 };  playSound('turn'); } break;
             }
-        });
+        }, { passive: false });
     });
+
+    // 虚拟按键区域阻止页面滚动
+    document.querySelector('.mobile-controls')?.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+    }, { passive: false });
+
+    /* ================================================================
+       画布滑动手势
+       ================================================================ */
+    (function () {
+        let startX = 0, startY = 0;
+
+        canvas.addEventListener('touchstart', (e) => {
+            if (!isPlaying || isPaused) return;
+            const t = e.touches[0];
+            startX = t.clientX;
+            startY = t.clientY;
+        }, { passive: true });
+
+        canvas.addEventListener('touchend', (e) => {
+            if (!isPlaying || isPaused) return;
+            const t = e.changedTouches[0];
+            const dx = t.clientX - startX;
+            const dy = t.clientY - startY;
+            const minSwipe = 20;
+
+            if (Math.abs(dx) < minSwipe && Math.abs(dy) < minSwipe) return;
+
+            if (Math.abs(dx) > Math.abs(dy)) {
+                if (dx > 0 && direction.x === 0)  { nextDirection = { x: 1, y: 0 };  playSound('turn'); }
+                if (dx < 0 && direction.x === 0)  { nextDirection = { x: -1, y: 0 }; playSound('turn'); }
+            } else {
+                if (dy > 0 && direction.y === 0)  { nextDirection = { x: 0, y: 1 };  playSound('turn'); }
+                if (dy < 0 && direction.y === 0)  { nextDirection = { x: 0, y: -1 }; playSound('turn'); }
+            }
+        }, { passive: true });
+
+        // 游戏中阻止画布区域页面滚动
+        canvas.addEventListener('touchmove', (e) => {
+            if (isPlaying) e.preventDefault();
+        }, { passive: false });
+    })();
 
     /* ================================================================
        页面可见性 (切标签页自动暂停)
