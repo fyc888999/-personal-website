@@ -853,7 +853,13 @@
     /* ================================================================
        倒计时开场 (3-2-1-GO)
        ================================================================ */
+    let countdownTimers = [];
+
     function startCountdown() {
+        // Cancel any in-progress countdown
+        countdownTimers.forEach(t => clearTimeout(t));
+        countdownTimers = [];
+
         isPlaying = false;
         document.getElementById('startBtn').textContent = '准备中...';
         initGame();
@@ -875,12 +881,12 @@
 
             idx++;
             if (idx < steps.length) {
-                setTimeout(tick, 700);
+                countdownTimers.push(setTimeout(tick, 700));
             } else {
                 startGame(true);
             }
         }
-        setTimeout(tick, 300);
+        countdownTimers.push(setTimeout(tick, 300));
     }
 
     /* ================================================================
@@ -1079,14 +1085,13 @@
             const actualScoreChange = score - oldScore; // S-7 fix: 实际分数变化
 
             // 生长处理: grow 包含头自身，所以额外 grow-1 节
-            const extraGrow = ft.grow - 1;
-            if (extraGrow > 0) {
-                for (let i = 0; i < extraGrow; i++) {
+            if (ft.grow > 1) {
+                for (let i = 0; i < ft.grow - 1; i++) {
                     snake.push({ ...snake[snake.length - 1] });
                 }
-            } else if (extraGrow < 0) {
+            } else if (ft.grow < 0) {
                 // 毒药缩身
-                for (let i = 0; i < Math.abs(extraGrow) && snake.length > 2; i++) {
+                for (let i = 0; i < Math.abs(ft.grow) && snake.length > 2; i++) {
                     snake.pop();
                 }
             }
@@ -1115,8 +1120,7 @@
         for (let i = foods.length - 1; i >= 0; i--) {
             const f = foods[i];
             if (f.type.duration && now - f.spawnTime > f.type.duration) {
-                foods[i] = foods[foods.length - 1];
-                foods.pop();
+                foods.splice(i, 1);
             }
         }
         while (foods.length < MAX_FOODS) spawnFood();

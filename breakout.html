@@ -942,12 +942,12 @@
                     // Destroy brick
                     br.status = 0;
                     remainingBricks--;
-                    score += Math.round(10 * diffConfig.scoreMultiplier * comboMultiplier);
                     comboCount++;
                     comboTimer = performance.now();
                     if (comboCount >= 3) comboMultiplier = 3;
                     else if (comboCount >= 2) comboMultiplier = 2;
                     else comboMultiplier = 1;
+                    score += Math.round(10 * diffConfig.scoreMultiplier * comboMultiplier);
 
                     SFX.hitBrick();
                     spawnParticles(br.x + br.w / 2, br.y + br.h / 2, br.color, 8);
@@ -1012,7 +1012,7 @@
                     b.x - b.radius < paddle.x + paddle.width) {
 
                     SFX.hitPaddle();
-                    const hitPoint = (b.x - paddle.x) / paddle.width;
+                    const hitPoint = Math.max(0, Math.min(1, (b.x - paddle.x) / paddle.width));
                     const angle = hitPoint * Math.PI * 0.8 + Math.PI * 0.1; // 10-170 degrees upward
                     const spd = Math.sqrt(b.dx * b.dx + b.dy * b.dy);
                     b.dx = Math.cos(angle) * spd;
@@ -1037,8 +1037,6 @@
                 $('comboDisplay').textContent = `x${comboMultiplier} 连击!`;
             } else {
                 $('comboDisplay').innerHTML = '&nbsp;';
-                comboCount = 0;
-                comboMultiplier = 1;
             }
         }
 
@@ -1079,6 +1077,13 @@
                 updateUI();
             }
 
+            // Paddle keyboard movement
+            if (paddle.dx) {
+                paddle.x += paddle.dx * dtFactor;
+                if (paddle.x < 0) paddle.x = 0;
+                if (paddle.x + paddle.width > canvas.width) paddle.x = canvas.width - paddle.width;
+            }
+
             updateBalls(dt);
             updatePowerups(dt);
             updateParticles(dt);
@@ -1101,7 +1106,7 @@
             isPlaying = false;
             if (rafId) cancelAnimationFrame(rafId);
 
-            SFX.win(); // plays win or just a sound
+            if (isWin) SFX.win(); else SFX.loseLife();
 
             const overlay = $('gameOverOverlay');
             const title = $('gameOverTitle');
@@ -1228,6 +1233,7 @@
             mobileMoveDir = dir;
             if (!mobileMoveTimer) {
                 mobileMoveTimer = setInterval(() => {
+                    if (!isPlaying || isPaused) return;
                     paddle.x += mobileMoveDir * paddle.speed;
                     paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
                 }, 1000 / 60);

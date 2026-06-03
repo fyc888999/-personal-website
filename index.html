@@ -63,6 +63,7 @@
         /* 全局样式 */
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 80px;
         }
 
         body {
@@ -647,75 +648,6 @@
             background: transparent;
         }
 
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-md);
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-xs);
-        }
-
-        .form-label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--color-text-light);
-        }
-
-        .form-input,
-        .form-textarea {
-            padding: var(--spacing-sm) var(--spacing-md);
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: var(--radius-sm);
-            color: var(--color-text);
-            font-size: 1rem;
-            font-family: var(--font-family);
-            transition: all var(--transition-fast);
-        }
-
-        .form-input:focus,
-        .form-textarea:focus {
-            outline: none;
-            border-color: var(--color-accent);
-            box-shadow: 0 0 15px rgba(240, 147, 251, 0.3);
-        }
-
-        .form-input::placeholder,
-        .form-textarea::placeholder {
-            color: var(--color-text-muted);
-        }
-
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .form-submit {
-            align-self: flex-start;
-            padding: var(--spacing-sm) var(--spacing-xl);
-            background: var(--gradient-primary);
-            color: var(--color-text);
-            border: none;
-            border-radius: var(--radius-full);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition-normal);
-        }
-
-        .form-submit:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .form-submit:active {
-            transform: translateY(0);
-        }
-
         .contact-info {
             margin-top: var(--spacing-lg);
             text-align: center;
@@ -736,30 +668,6 @@
             color: var(--color-text);
         }
 
-        /* 表单验证样式 */
-        .form-input:invalid:not(:placeholder-shown) {
-            border-color: #ff6b6b;
-        }
-
-        .form-input:valid:not(:placeholder-shown) {
-            border-color: #51cf66;
-        }
-
-        /* 提交成功提示 */
-        .form-success {
-            display: none;
-            background: rgba(76, 175, 80, 0.3);
-            color: #81c784;
-            padding: var(--spacing-md);
-            border-radius: var(--radius-md);
-            text-align: center;
-            margin-top: var(--spacing-md);
-        }
-
-        .form-success.show {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
 
         /* 响应式：联系区域 */
         @media (max-width: 768px) {
@@ -769,16 +677,6 @@
 
             .form-embed {
                 height: 440px;
-            }
-
-            .form-submit {
-                align-self: stretch;
-                min-height: 48px;
-            }
-
-            .form-input,
-            .form-textarea {
-                min-height: 48px;
             }
         }
 
@@ -990,6 +888,7 @@
                         <iframe
                             src="https://pwqmskoc.jsjform.com/f/vUmmdF"
                             class="form-embed"
+                            title="联系表单"
                             allow="clipboard-write"
                             loading="lazy"
                         ></iframe>
@@ -1024,20 +923,42 @@
     <button class="back-to-top" id="backToTop" aria-label="返回顶部">↑</button>
 
     <script>
-        // 智能隐藏导航栏
+        // 智能隐藏导航栏 + 活动链接 + 返回顶部 (合并为单一 scroll handler)
         const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
         let lastScrollY = window.scrollY;
         let ticking = false;
 
-        function updateNavbar() {
+        function onScroll() {
             const scrollY = window.scrollY;
+            const delta = scrollY - lastScrollY;
 
-            if (scrollY > lastScrollY && scrollY > 100) {
-                // 向下滚动且不在顶部
+            // 导航栏隐藏/显示 (10px 阈值防抖动)
+            if (delta > 10 && scrollY > 100) {
                 navbar.classList.add('hidden');
-            } else {
-                // 向上滚动或在顶部
+            } else if (delta < -10 || scrollY <= 100) {
                 navbar.classList.remove('hidden');
+            }
+
+            // 活动链接更新
+            let current = '';
+            sections.forEach(section => {
+                if (scrollY >= section.offsetTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+
+            // 返回顶部按钮
+            if (backToTop) {
+                backToTop.classList.toggle('visible', scrollY > 300);
             }
 
             lastScrollY = scrollY;
@@ -1046,7 +967,7 @@
 
         window.addEventListener('scroll', () => {
             if (!ticking) {
-                window.requestAnimationFrame(updateNavbar);
+                window.requestAnimationFrame(onScroll);
                 ticking = true;
             }
         }, { passive: true });
@@ -1074,32 +995,6 @@
                 }
             });
         });
-
-        // 滚动时更新活动链接
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        function updateActiveLink() {
-            let current = '';
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-
-                if (window.scrollY >= sectionTop - 200) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        }
-
-        window.addEventListener('scroll', updateActiveLink, { passive: true });
 
         // 移动端汉堡菜单
         const navMenuBtn = document.getElementById('navMenuBtn');
@@ -1162,14 +1057,6 @@
         const backToTop = document.getElementById('backToTop');
 
         if (backToTop) {
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 500) {
-                    backToTop.classList.add('visible');
-                } else {
-                    backToTop.classList.remove('visible');
-                }
-            }, { passive: true });
-
             backToTop.addEventListener('click', () => {
                 window.scrollTo({
                     top: 0,
