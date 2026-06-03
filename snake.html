@@ -89,6 +89,12 @@
             margin: 0 auto;
         }
 
+        /* ========== 游戏区域（画布 + 按键叠加） ========== */
+        .game-area {
+            position: relative;
+            display: inline-block;
+        }
+
         /* ========== 按钮 ========== */
         .controls {
             margin-top: 20px;
@@ -156,29 +162,31 @@
         /* ========== 移动端虚拟按键 ========== */
         .mobile-controls {
             display: none;
-            margin-top: 16px;
+            position: absolute;
+            bottom: 14px;
+            right: 14px;
+            z-index: 10;
             touch-action: none;
         }
 
         .dpad {
             display: grid;
-            grid-template-columns: repeat(3, 68px);
-            grid-template-rows: repeat(3, 68px);
-            gap: 6px;
-            justify-content: center;
+            grid-template-columns: repeat(3, 56px);
+            grid-template-rows: repeat(3, 56px);
+            gap: 4px;
         }
 
         .control-btn {
-            width: 68px;
-            height: 68px;
+            width: 56px;
+            height: 56px;
             border: none;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
-            font-size: 1.8rem;
+            border-radius: 14px;
+            background: rgba(0, 0, 0, 0.45);
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.5rem;
             cursor: pointer;
             transition: background 0.1s, transform 0.1s;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(6px);
             user-select: none;
             -webkit-user-select: none;
             touch-action: manipulation;
@@ -186,6 +194,7 @@
             align-items: center;
             justify-content: center;
             -webkit-tap-highlight-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
         .control-btn:active {
@@ -198,10 +207,7 @@
         }
 
         .swipe-hint {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.35);
-            font-size: 0.8rem;
-            margin-top: 10px;
+            display: none;
         }
 
         /* ========== 遮罩层通用 ========== */
@@ -433,19 +439,30 @@
 
         /* ========== 响应式 ========== */
         @media (max-width: 900px) {
-            h1 { font-size: 2rem; }
-            .game-info { gap: 12px; }
-            .info-item { padding: 8px 14px; }
-            .info-value { font-size: 1.2rem; }
-            .mobile-controls { display: block; }
-            .controls { gap: 8px; }
+            h1 { font-size: 1.6rem; margin-bottom: 6px; }
+            .subtitle { font-size: 0.85rem; margin-bottom: 12px; }
+            .game-info { gap: 8px; margin-bottom: 10px; }
+            .info-item { padding: 6px 12px; }
+            .info-value { font-size: 1.1rem; }
+            .info-label { font-size: 0.7rem; }
+            .food-legend { display: none; }
+            .controls { gap: 6px; margin-top: 12px; }
+            .controls .btn { padding: 10px 16px; font-size: 0.85rem; }
             .glass-panel { padding: 20px; }
-        }
 
-        @media (max-width: 400px) {
-            canvas { width: 100% !important; height: auto !important; }
-            .dpad { grid-template-columns: repeat(3, 58px); grid-template-rows: repeat(3, 58px); }
-            .control-btn { width: 58px; height: 58px; font-size: 1.5rem; }
+            .game-area {
+                display: block;
+            }
+
+            .game-area canvas {
+                width: 100vw;
+                height: 100vw;
+                max-width: 500px;
+                max-height: 500px;
+                border-radius: 10px;
+            }
+
+            .mobile-controls { display: block; }
         }
     </style>
 </head>
@@ -488,8 +505,23 @@
             <div class="legend-item"><span class="legend-dot" style="background:#ff8c00"></span>超级 +50</div>
         </div>
 
-        <!-- 画布 -->
-        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <!-- 游戏区域（画布 + 虚拟按键叠加） -->
+        <div class="game-area">
+            <canvas id="gameCanvas" width="400" height="400"></canvas>
+            <div class="mobile-controls">
+                <div class="dpad">
+                    <div class="dpad-blank"></div>
+                    <button class="control-btn" data-dir="up">&#8593;</button>
+                    <div class="dpad-blank"></div>
+                    <button class="control-btn" data-dir="left">&#8592;</button>
+                    <div class="dpad-blank"></div>
+                    <button class="control-btn" data-dir="right">&#8594;</button>
+                    <div class="dpad-blank"></div>
+                    <button class="control-btn" data-dir="down">&#8595;</button>
+                    <div class="dpad-blank"></div>
+                </div>
+            </div>
+        </div>
 
         <!-- 控制按钮 -->
         <div class="controls">
@@ -499,22 +531,6 @@
             <button class="btn-sound" id="soundBtn" title="音效开关">
                 <span id="soundIcon">&#128266;</span>
             </button>
-        </div>
-
-        <!-- 移动端虚拟按键 -->
-        <div class="mobile-controls">
-            <div class="dpad">
-                <div class="dpad-blank"></div>
-                <button class="control-btn" data-dir="up">&#8593;</button>
-                <div class="dpad-blank"></div>
-                <button class="control-btn" data-dir="left">&#8592;</button>
-                <div class="dpad-blank"></div>
-                <button class="control-btn" data-dir="right">&#8594;</button>
-                <div class="dpad-blank"></div>
-                <button class="control-btn" data-dir="down">&#8595;</button>
-                <div class="dpad-blank"></div>
-            </div>
-            <p class="swipe-hint">也可以在屏幕上滑动控制方向</p>
         </div>
 
         <a href="index.html" class="back-link">&#8592; 返回主页</a>
