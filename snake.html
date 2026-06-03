@@ -444,7 +444,8 @@
             .info-item { padding: 6px 12px; }
             .info-value { font-size: 1.1rem; }
             .info-label { font-size: 0.7rem; }
-            .food-legend { display: none; }
+            .food-legend { gap: 6px; margin-bottom: 8px; font-size: 0.7rem; }
+            .legend-dot { width: 8px; height: 8px; }
             .controls { gap: 6px; margin-top: 12px; }
             .controls .btn { padding: 10px 16px; font-size: 0.85rem; }
             .glass-panel { padding: 20px; }
@@ -640,7 +641,8 @@
     let difficulty = null;
     let diffConf = null;
     let lives = 0;
-    let food = null;          // { x, y, type, spawnTime }
+    let foods = [];           // [{ x, y, type, spawnTime }, ...]
+    const MAX_FOODS = 3;
     let obstacles = [];       // [{x,y}, ...]
 
     // rAF 相关
@@ -838,9 +840,42 @@
             difficulty = diff;
             diffConf = DIFF_CONFIG[diff];
             hideDifficultyOverlay();
-            startGame();
+            startCountdown();
         });
     });
+
+    /* ================================================================
+       倒计时开场 (3-2-1-GO)
+       ================================================================ */
+    function startCountdown() {
+        isPlaying = false;
+        document.getElementById('startBtn').textContent = '准备中...';
+        initGame();
+        draw();
+
+        const steps = [3, 2, 1, 'GO'];
+        let idx = 0;
+
+        function tick() {
+            draw();
+            const val = steps[idx];
+            ctx.fillStyle = 'rgba(0,0,0,0.45)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#fff';
+            ctx.font = `bold ${canvas.width * 0.2}px sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(val, canvas.width / 2, canvas.height / 2);
+
+            idx++;
+            if (idx < steps.length) {
+                setTimeout(tick, 700);
+            } else {
+                startGame(true);
+            }
+        }
+        setTimeout(tick, 300);
+    }
 
     /* ================================================================
        模块6: 排行榜 (localStorage top 10)
@@ -935,13 +970,14 @@
         baseSpeed = diffConf.speed;
         gameSpeed = baseSpeed;
         obstacles = [];
+        foods = [];
         particles = [];
         floatingTexts = [];
         accumulator = 0;
         lastTime = 0;
 
         if (diffConf.obstacles) generateObstacles();
-        spawnFood();
+        for (let i = 0; i < MAX_FOODS; i++) spawnFood();
         updateHUD();
     }
 
@@ -963,15 +999,20 @@
         }
     }
 
+    function isFoodAt(x, y) {
+        return foods.some(f => f.x === x && f.y === y);
+    }
+
     function spawnFood() {
+        if (foods.length >= MAX_FOODS) return;
         const type = pickFoodType();
         let fx, fy, attempts = 0;
         do {
             fx = Math.floor(Math.random() * COLS);
             fy = Math.floor(Math.random() * ROWS);
             attempts++;
-        } while (attempts < 500 && (isSnakeAt(fx, fy) || isObstacleAt(fx, fy)));
-        food = { x: fx, y: fy, type, spawnTime: performance.now() };
+        } while (attempts < 500 && (isSnakeAt(fx, fy) || isObstacleAt(fx, fy) || isFoodAt(fx, fy)));
+        foods.push({ x: fx, y: fy, type, spawnTime: performance.now() });
     }
 
     function isSnakeAt(x, y) {
@@ -1002,8 +1043,8 @@
 
         // S-2 fix: 先判断是否吃食物，没吃则先移除尾部，再检查自身碰撞
         // 这样朝自己尾巴移动时不会误判死亡
-        const eating = food && head.x === food.x && head.y === food.y;
-        if (!eating) {
+        const eatenIndex = foods.findIndex(f => head.x === f.x && head.y === f.y);
+        if (eatenIndex === -1) {
             snake.pop(); // 没吃食物，先移除尾部
         }
 
@@ -1022,8 +1063,9 @@
         snake.unshift(head);
 
         // 吃食物处理
-        if (eating) {
-            const ft = food.type;
+        if (eatenIndex !== -1) {
+            const ft = foods[eatenIndex].type;
+            foods.splice(eatenIndex, 1);
             const oldScore = score; // S-7 fix: 记录旧分数，计算实际变化
             score += ft.score;
             if (score < 0) score = 0;
@@ -1062,11 +1104,10 @@
         }
 
         // 食物超时消失（所有食物都有duration，不吃就会自动消失生成新的）
-        if (food && food.type.duration) {
-            if (performance.now() - food.spawnTime > food.type.duration) {
-                spawnFood();
-            }
-        }
+        const now = performance.now();
+        const beforeLen = foods.length;
+        foods = foods.filter(f => !(f.type.duration && now - f.spawnTime > f.type.duration));
+        while (foods.length < MAX_FOODS) spawnFood();
     }
 
     function handleDeath() {
@@ -1229,9 +1270,9 @@
         ctx.shadowBlur = 0;
 
         // 食物 (脉动 sin 动画)
-        if (food) {
+        const t = performance.now();
+        for (const food of foods) {
             const ft = food.type;
-            const t = performance.now();
             const pulse = 0.8 + Math.sin(t * 0.005) * 0.2;
             const fx = food.x * GRID + GRID / 2;
             const fy = food.y * GRID + GRID / 2;
@@ -1252,7 +1293,7 @@
             }
             ctx.shadowBlur = 0;
 
-            // 奖励食物倒计时环
+            // 食物倒计时环
             if (ft.duration) {
                 const elapsed = t - food.spawnTime;
                 const remaining = 1 - elapsed / ft.duration;
@@ -1368,7 +1409,7 @@
     /* ================================================================
        游戏启动 / 暂停 / 重启
        ================================================================ */
-    function startGame() {
+    function startGame(skipInit) {
         // S-1 fix: 防止双重游戏循环，先取消已有动画帧
         if (rafId) cancelAnimationFrame(rafId);
         isPlaying = true;
@@ -1378,7 +1419,7 @@
         document.getElementById('pauseBtn').disabled = false;
         document.getElementById('pauseBtn').textContent = '暂停';
 
-        initGame();
+        if (!skipInit) initGame();
         draw();
 
         lastTime = 0;
