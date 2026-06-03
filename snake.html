@@ -163,30 +163,30 @@
         .mobile-controls {
             display: none;
             position: absolute;
-            bottom: 14px;
-            right: 14px;
+            bottom: 10px;
+            left: 10px;
             z-index: 10;
             touch-action: none;
         }
 
         .dpad {
             display: grid;
-            grid-template-columns: repeat(3, 56px);
-            grid-template-rows: repeat(3, 56px);
-            gap: 4px;
+            grid-template-columns: repeat(3, 46px);
+            grid-template-rows: repeat(3, 46px);
+            gap: 3px;
         }
 
         .control-btn {
-            width: 56px;
-            height: 56px;
+            width: 46px;
+            height: 46px;
             border: none;
-            border-radius: 14px;
-            background: rgba(0, 0, 0, 0.45);
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 1.5rem;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.35);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
             cursor: pointer;
             transition: background 0.1s, transform 0.1s;
-            backdrop-filter: blur(6px);
+            backdrop-filter: blur(4px);
             user-select: none;
             -webkit-user-select: none;
             touch-action: manipulation;
@@ -194,7 +194,6 @@
             align-items: center;
             justify-content: center;
             -webkit-tap-highlight-color: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
         .control-btn:active {
