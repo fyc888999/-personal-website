@@ -791,13 +791,19 @@
             p.vx *= 0.97;
             p.vy *= 0.97;
             p.life -= p.decay;
-            if (p.life <= 0) particles.splice(i, 1);
+            if (p.life <= 0) {
+                particles[i] = particles[particles.length - 1];
+                particles.pop();
+            }
         }
         for (let i = floatingTexts.length - 1; i >= 0; i--) {
             const ft = floatingTexts[i];
             ft.y += ft.vy;
             ft.life -= 0.02;
-            if (ft.life <= 0) floatingTexts.splice(i, 1);
+            if (ft.life <= 0) {
+                floatingTexts[i] = floatingTexts[floatingTexts.length - 1];
+                floatingTexts.pop();
+            }
         }
     }
 
@@ -924,10 +930,10 @@
         container.innerHTML = html;
     }
 
+    const _escEl = document.createElement('div');
     function esc(s) {
-        const d = document.createElement('div');
-        d.textContent = s;
-        return d.innerHTML;
+        _escEl.textContent = s;
+        return _escEl.innerHTML;
     }
 
     // 排行榜按钮事件
@@ -1024,7 +1030,8 @@
     }
 
     function update() {
-        direction = { ...nextDirection };
+        direction.x = nextDirection.x;
+        direction.y = nextDirection.y;
         const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
 
         // 撞墙检测
@@ -1105,8 +1112,13 @@
 
         // 食物超时消失（所有食物都有duration，不吃就会自动消失生成新的）
         const now = performance.now();
-        const beforeLen = foods.length;
-        foods = foods.filter(f => !(f.type.duration && now - f.spawnTime > f.type.duration));
+        for (let i = foods.length - 1; i >= 0; i--) {
+            const f = foods[i];
+            if (f.type.duration && now - f.spawnTime > f.type.duration) {
+                foods[i] = foods[foods.length - 1];
+                foods.pop();
+            }
+        }
         while (foods.length < MAX_FOODS) spawnFood();
     }
 
@@ -1216,7 +1228,7 @@
         }
 
         // 粒子更新 (每帧)
-        updateParticles();
+        if (particles.length || floatingTexts.length) updateParticles();
 
         // delta-time 累加器
         accumulator += dt;
@@ -1247,27 +1259,27 @@
         // 网格
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
         ctx.lineWidth = 0.5;
+        ctx.beginPath();
         for (let i = 0; i <= COLS; i++) {
-            ctx.beginPath();
             ctx.moveTo(i * GRID, 0);
             ctx.lineTo(i * GRID, canvas.height);
-            ctx.stroke();
         }
         for (let i = 0; i <= ROWS; i++) {
-            ctx.beginPath();
             ctx.moveTo(0, i * GRID);
             ctx.lineTo(canvas.width, i * GRID);
-            ctx.stroke();
         }
+        ctx.stroke();
 
         // 障碍物
-        for (const ob of obstacles) {
+        if (obstacles.length) {
             ctx.fillStyle = 'rgba(120, 120, 140, 0.7)';
             ctx.shadowColor = 'rgba(120, 120, 140, 0.4)';
             ctx.shadowBlur = 6;
-            ctx.fillRect(ob.x * GRID + 2, ob.y * GRID + 2, GRID - 4, GRID - 4);
+            for (const ob of obstacles) {
+                ctx.fillRect(ob.x * GRID + 2, ob.y * GRID + 2, GRID - 4, GRID - 4);
+            }
+            ctx.shadowBlur = 0;
         }
-        ctx.shadowBlur = 0;
 
         // 食物 (脉动 sin 动画)
         const t = performance.now();
@@ -1310,46 +1322,40 @@
         }
 
         // 蛇
-        snake.forEach((seg, i) => {
-            const isHead = i === 0;
-            if (isHead) {
-                ctx.fillStyle = '#667eea';
-                ctx.shadowColor = 'rgba(102, 126, 234, 0.6)';
-                ctx.shadowBlur = 10;
-            } else {
-                const alpha = 1 - (i / snake.length) * 0.6;
-                ctx.fillStyle = `rgba(102, 126, 234, ${alpha})`;
-                ctx.shadowBlur = 0;
-            }
-
-            const sx = seg.x * GRID + 1;
-            const sy = seg.y * GRID + 1;
+        ctx.fillStyle = '#667eea';
+        for (let i = 1; i < snake.length; i++) {
+            ctx.globalAlpha = 1 - (i / snake.length) * 0.6;
+            const sx = snake[i].x * GRID + 1;
+            const sy = snake[i].y * GRID + 1;
             ctx.fillRect(sx, sy, GRID - 2, GRID - 2);
-            ctx.shadowBlur = 0;
-
-            // 蛇头眼睛
-            if (isHead) {
-                ctx.fillStyle = '#fff';
-                const es = 3, eo = 5;
-                const bx = seg.x * GRID, by = seg.y * GRID;
-                let ex1, ey1, ex2, ey2;
-                if (direction.x === 1) {
-                    ex1 = bx + GRID - eo - es; ey1 = by + eo;
-                    ex2 = bx + GRID - eo - es; ey2 = by + GRID - eo - es;
-                } else if (direction.x === -1) {
-                    ex1 = bx + eo; ey1 = by + eo;
-                    ex2 = bx + eo; ey2 = by + GRID - eo - es;
-                } else if (direction.y === -1) {
-                    ex1 = bx + eo; ey1 = by + eo;
-                    ex2 = bx + GRID - eo - es; ey2 = by + eo;
-                } else {
-                    ex1 = bx + eo; ey1 = by + GRID - eo - es;
-                    ex2 = bx + GRID - eo - es; ey2 = by + GRID - eo - es;
-                }
-                ctx.fillRect(ex1, ey1, es, es);
-                ctx.fillRect(ex2, ey2, es, es);
-            }
-        });
+        }
+        ctx.globalAlpha = 1;
+        // 蛇头
+        ctx.shadowColor = 'rgba(102, 126, 234, 0.6)';
+        ctx.shadowBlur = 10;
+        const h = snake[0];
+        ctx.fillRect(h.x * GRID + 1, h.y * GRID + 1, GRID - 2, GRID - 2);
+        ctx.shadowBlur = 0;
+        // 蛇头眼睛
+        ctx.fillStyle = '#fff';
+        const es = 3, eo = 5;
+        const bx = h.x * GRID, by = h.y * GRID;
+        let ex1, ey1, ex2, ey2;
+        if (direction.x === 1) {
+            ex1 = bx + GRID - eo - es; ey1 = by + eo;
+            ex2 = bx + GRID - eo - es; ey2 = by + GRID - eo - es;
+        } else if (direction.x === -1) {
+            ex1 = bx + eo; ey1 = by + eo;
+            ex2 = bx + eo; ey2 = by + GRID - eo - es;
+        } else if (direction.y === -1) {
+            ex1 = bx + eo; ey1 = by + eo;
+            ex2 = bx + GRID - eo - es; ey2 = by + eo;
+        } else {
+            ex1 = bx + eo; ey1 = by + GRID - eo - es;
+            ex2 = bx + GRID - eo - es; ey2 = by + GRID - eo - es;
+        }
+        ctx.fillRect(ex1, ey1, es, es);
+        ctx.fillRect(ex2, ey2, es, es);
 
         // 粒子 & 飘字
         drawParticles();
