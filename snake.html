@@ -861,6 +861,7 @@
         countdownTimers = [];
 
         isPlaying = false;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         document.getElementById('startBtn').textContent = '准备中...';
         initGame();
         draw();
@@ -1251,13 +1252,12 @@
        绘制
        ================================================================ */
     function draw() {
-        // 清屏
-        // S-3 fix: 暂停时完全清屏，避免半透明颜色逐帧累积导致画面变暗
-        if (isPaused) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        } else {
+        // 清屏：游戏中用半透明覆盖产生拖尾效果，其他状态完全清屏
+        if (isPlaying && !isPaused) {
             ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
 
         // 网格
